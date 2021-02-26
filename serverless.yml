@@ -1,0 +1,29 @@
+service: testtwitterbot
+
+provider:
+  name: aws
+  runtime: go1.x
+  stage: ${opt:stage, 'dev'}
+  region: ${opt:region, 'us-east-1'}
+
+custom:
+  env: ${file(./${self:provider.stage}.env.json)}
+
+package:
+  exclude:
+    - ./**
+  include:
+    - ./bin/**
+
+functions:
+  bot:
+    handler: bin/tweet
+    description: tweets once a day given certain conditions
+    timeout: 5
+    events:
+      - schedule: cron(30 16 * * ? *)
+    environment:
+      TWITTER_CONSUMER_KEY: ${self:custom.env.TWITTER_CONSUMER_KEY}
+      TWITTER_CONSUMER_SECRET: ${self:custom.env.TWITTER_CONSUMER_SECRET}
+      TWITTER_ACCESS_TOKEN_KEY: ${self:custom.env.TWITTER_ACCESS_TOKEN_KEY}
+      TWITTER_ACCESS_TOKEN_SECRET: ${self:custom.env.TWITTER_ACCESS_TOKEN_SECRET}

@@ -1,0 +1,6 @@
+.idea/
+*.env.json
+node_modules/
+bin/**/*
+.serverless/
+vendor/
