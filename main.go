@@ -54,8 +54,14 @@ func Handler(ctx context.Context) (string, error) {
 	// Twitter client
 	client := twitter.NewClient(httpClient)
 
+	statusParams := &twitter.StatusUpdateParams{
+		Lat:                twitter.Float(38.8977),
+		Long:               twitter.Float(77.0365),
+		DisplayCoordinates: twitter.Bool(true),
+	}
+
 	// Send a Tweet
-	tweet, resp, err := client.Statuses.Update(tweetContent, nil)
+	tweet, resp, err := client.Statuses.Update(tweetContent, statusParams)
 	if err != nil {
 		return "Failed to send tweet", err
 	}
@@ -63,13 +69,10 @@ func Handler(ctx context.Context) (string, error) {
 		if resp.StatusCode != 200 {
 			buf := new(bytes.Buffer)
 			_, err = buf.ReadFrom(resp.Body)
-			var newStr string
 			if err != nil {
-				newStr = "Unable to read response body"
-			} else {
-				newStr = buf.String()
+				return "Non 200 status code returned", fmt.Errorf("non-200 status code: %d. unable to read response body: %w", resp.StatusCode, err)
 			}
-			return "Non 200 status code returned", errors.New(newStr)
+			return "Non 200 status code returned", errors.New(buf.String())
 		}
 	}
 

@@ -2,6 +2,14 @@
 region ?= us-east-1
 stage ?= dev
 sls ?= ./node_modules/.bin/sls
+tweet ?= ayylmao
+define GetFromPkg
+$(shell node -p "require('./dev.env.json').$(1)")
+endef
+key := $(call GetFromPkg,TWITTER_CONSUMER_KEY)
+secret := $(call GetFromPkg,TWITTER_CONSUMER_SECRET)
+accessKey := $(call GetFromPkg,TWITTER_ACCESS_TOKEN_KEY)
+accessSecret := $(call GetFromPkg,TWITTER_ACCESS_TOKEN_SECRET)
 
 build:
 	export GO111MODULE=on
@@ -24,9 +32,9 @@ remove:
 	$(sls) remove
 
 localinvoke:
-	$(sls) invoke local -f bot --env TWITTER_CONSUMER_KEY=a \
-                               --env TWITTER_CONSUMER_SECRET=a \
-                               --env TWITTER_ACCESS_TOKEN_KEY=a \
-                               --env TWITTER_ACCESS_TOKEN_SECRET=a \
-                               --env STANDARD_TWEET=ayylmao \
+	$(sls) invoke local -f bot --env TWITTER_CONSUMER_KEY="$(key)" \
+                               --env TWITTER_CONSUMER_SECRET="$(secret)" \
+                               --env TWITTER_ACCESS_TOKEN_KEY="$(accessKey)" \
+                               --env TWITTER_ACCESS_TOKEN_SECRET="$(accessSecret)" \
+                               --env STANDARD_TWEET="$(tweet)" \
                                $(other_env)
