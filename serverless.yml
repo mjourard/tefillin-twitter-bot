@@ -21,7 +21,7 @@ functions:
     description: tweets once a day given certain conditions
     timeout: 5
     events:
-      - schedule: cron(30 16 * * ? *)
+      - schedule: cron(00 17 * * ? *)
     environment:
       TWITTER_CONSUMER_KEY: ${self:custom.env.TWITTER_CONSUMER_KEY}
       TWITTER_CONSUMER_SECRET: ${self:custom.env.TWITTER_CONSUMER_SECRET}
