@@ -34,7 +34,7 @@ test:
 	go test
 
 remove:
-	$(sls) remove
+	$(sls) remove --stage $(stage) --region $(region)
 
 localinvoke:
 	$(sls) invoke local -f bot --env TWITTER_CONSUMER_KEY="$(key)" \

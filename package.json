@@ -1,12 +1,12 @@
 {
-  "name": "test-twitter-bot",
+  "name": "tefillin-twitter-bot",
   "version": "1.0.0",
   "description": "my first twitter bot written in go",
   "main": "index.js",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mjourard/testtwitterbot.git"
+    "url": "git+https://github.com/mjourard/tefillin-twitter-bot.git"
   },
   "keywords": ["twitter", "bot"],
   "author": "",
