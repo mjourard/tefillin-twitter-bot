@@ -1,4 +1,4 @@
-# Test Twitter Bot
+# Tefillin Twitter Bot
 
 ## Description
 A Twitter bot that tweets once a day if you've laid tefillin on appropriate days.
